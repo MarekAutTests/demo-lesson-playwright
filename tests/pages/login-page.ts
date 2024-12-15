@@ -3,7 +3,7 @@ import { OrderPage } from './order-page'
 import { SERVICE_URL } from '../../config/env-data'
 import { BasePage } from './base-page'
 
-export class LoginPage extends BasePage{
+export class LoginPage extends BasePage {
   //readonly page: Page
   readonly url: string = SERVICE_URL
   readonly signInButton: Locator
@@ -30,5 +30,4 @@ export class LoginPage extends BasePage{
     await this.signInButton.click()
     return new OrderPage(this.page)
   }
-
 }
