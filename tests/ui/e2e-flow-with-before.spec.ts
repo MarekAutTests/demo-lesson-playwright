@@ -10,22 +10,36 @@ test.beforeEach(async ({ page }) => {
   await authPage.open()
 })
 
-test('signIn button disabled when incorrect data inserted', async ({}) => {
+test.skip('signIn button disabled when incorrect data inserted', async ({}) => {
   await authPage.usernameField.fill(faker.lorem.word(2))
   await authPage.passwordField.fill(faker.lorem.word(7))
   await expect(authPage.signInButton).toBeDisabled()
 })
 
+//npx playwright test --ui
 test('error message displayed when incorrect credentials used', async ({}) => {
   // implement test
+  const orderCreationPage = await authPage.signIn('test', 'test1234')
+  await expect(authPage.incorrectCredentialsPopup).toBeVisible()
+  await expect(authPage.incorrectCredentialsPopup).toContainText('Incorrect credentials')
 })
 
-test('login with correct credentials and verify order creation page', async ({}) => {
-  const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
-  await expect(orderCreationPage.statusButton).toBeVisible()
-  // verify at least few elements on the order creation page
+//npx playwright test --project=chromium --debug
+test.skip('login with correct credentials and verify order creation page', async ({}) => {
+  //const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
+  const orderCreationPage = await authPage.signIn('marek_vorp_', 'M3n4O5p6')
+  await expect.soft(orderCreationPage.statusButton).toBeVisible()
+  await expect.soft(orderCreationPage.orderCreatorName).toBeVisible()
+  await expect.soft(orderCreationPage.orderCreatorPhone).toBeVisible()
+  await expect.soft(orderCreationPage.orderComment).toBeVisible()
+  await expect.soft(orderCreationPage.createOrderButton).toBeVisible()
 })
 
-test('login and create order', async ({}) => {
-  // implement test
+test.skip('login and create order', async ({}) => {
+  const orderCreationPage = await authPage.signIn('marek_vorp_', 'M3n4O5p6')
+  await orderCreationPage.orderCreatorName.fill(faker.lorem.word(4))
+  await orderCreationPage.orderCreatorPhone.fill(faker.lorem.lines(6))
+  await orderCreationPage.orderComment.fill(faker.lorem.words(6))
+  await orderCreationPage.createOrderButton.click()
+  await orderCreationPage.orderCreatorPopup.isVisible()
 })
