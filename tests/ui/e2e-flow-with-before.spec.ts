@@ -10,22 +10,22 @@ test.beforeEach(async ({ page }) => {
   await authPage.open()
 })
 
-test.skip('signIn button disabled when incorrect data inserted', async ({}) => {
+test('signIn button disabled when incorrect data inserted', async ({}) => {
   await authPage.usernameField.fill(faker.lorem.word(2))
   await authPage.passwordField.fill(faker.lorem.word(7))
-  await expect(authPage.signInButton).toBeDisabled()
+  await expect.soft(authPage.signInButton).toBeDisabled()
 })
 
 //npx playwright test --ui
 test('error message displayed when incorrect credentials used', async ({}) => {
   // implement test
   const orderCreationPage = await authPage.signIn('test', 'test1234')
-  await expect(authPage.incorrectCredentialsPopup).toBeVisible()
-  await expect(authPage.incorrectCredentialsPopup).toContainText('Incorrect credentials')
+  await expect.soft(authPage.incorrectCredentialsPopup).toBeVisible()
+  await expect.soft(authPage.incorrectCredentialsPopup).toContainText('Incorrect credentials')
 })
 
 //npx playwright test --project=chromium --debug
-test.skip('login with correct credentials and verify order creation page', async ({}) => {
+test('login with correct credentials and verify order creation page', async ({}) => {
   //const orderCreationPage = await authPage.signIn(USERNAME, PASSWORD)
   const orderCreationPage = await authPage.signIn('marek_vorp_', 'M3n4O5p6')
   await expect.soft(orderCreationPage.statusButton).toBeVisible()
@@ -35,7 +35,7 @@ test.skip('login with correct credentials and verify order creation page', async
   await expect.soft(orderCreationPage.createOrderButton).toBeVisible()
 })
 
-test.skip('login and create order', async ({}) => {
+test('login and create order', async ({}) => {
   const orderCreationPage = await authPage.signIn('marek_vorp_', 'M3n4O5p6')
   await orderCreationPage.orderCreatorName.fill(faker.lorem.word(4))
   await orderCreationPage.orderCreatorPhone.fill(faker.lorem.lines(6))
