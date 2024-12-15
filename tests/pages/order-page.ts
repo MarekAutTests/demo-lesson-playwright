@@ -19,7 +19,7 @@ export class OrderPage extends BasePage {
     super(page)
     //this.page = page
     this.statusButton = this.page.getByTestId('openStatusPopup-button')
-    this.orderCreatorName = this.page.getByTestId('openStatusPopup-button')
+    this.orderCreatorName = this.page.getByTestId('username-input')
     this.orderCreatorPhone = this.page.getByTestId('phone-input')
     this.orderComment = this.page.getByTestId('comment-input')
     this.createOrderButton = this.page.getByTestId('createOrder-button')
